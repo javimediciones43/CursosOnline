@@ -14,13 +14,14 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
+     * Aquí van los campos de la tabla que no son  primary keys.
      * @var list<string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
