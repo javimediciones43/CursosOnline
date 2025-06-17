@@ -21,13 +21,19 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        // Verifica si el usuario tiene el rol de administrador.
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
         }
 
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'accepted' => true]);
+        return response()->json([
+            'token' => $token,
+            'accepted' => true
+        ]);
     }
 
     public function logout(Request $request)

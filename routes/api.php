@@ -14,6 +14,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
 // Aquí irán las rutas protegidas (cursos, categorías, etc.)
 
 // Lo protegemos para que solo usuarios con rol admin puedan gestionarlas.

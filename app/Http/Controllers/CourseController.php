@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Course;
 
 class CourseController extends Controller
 {
@@ -11,7 +12,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        return Course::with('category', 'creator')->get();
     }
 
     /**
@@ -27,7 +28,18 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'creator_id' => 'required|exists:categories,id',
+        ]);
+
+        $course = Course::create([
+            'title' => $request->title,
+            'description'=> $request->description,
+            'category_id' => $request->category_id,
+            'created_by' => $request->creator_id,
+        ]);
     }
 
     /**
@@ -35,7 +47,7 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Course::with('category', 'creator')->findOrFail($id);
     }
 
     /**
@@ -51,7 +63,16 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $course = Course::findOrFail($id);
+
+        $request->validate([
+            'title'=> 'required|string|max:100',
+            'description'=>'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $course->update($request->all());
+        return response()->json($course);
     }
 
     /**
@@ -59,6 +80,7 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Course::findOrFail($id)->delete();
+        return response()->json(['message'=> 'Curso elminado']);
     }
 }

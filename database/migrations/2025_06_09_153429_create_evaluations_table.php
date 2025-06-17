@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('enrollment_id')->constrained()->onDelete('cascade');
             $table->decimal('score', 5, 2);
-            $table->text('feedback')->nullable();
+            $table->text('feedback')->nullable(); // comentario
             $table->timestamp('evaluated_at')->useCurrent();
             $table->timestamps();
         });
