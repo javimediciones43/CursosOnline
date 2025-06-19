@@ -30,7 +30,9 @@ class CategoryController extends Controller
         ]);
 
         $category = Category::create($request->all());
-        return response()->json($category, 201);
+        return response()->json([
+            'messsage' => 'Categoria creada', 'category' => $category
+        ], 201);
     }
 
     /**
@@ -50,11 +52,14 @@ class CategoryController extends Controller
 
         $request->validate([
             'name'=> 'required|string|max:100',
-            'descripcion'=>'nullable|string'
+            'description'=>'nullable|string'
         ]);
 
         $category->update($request->all());
-        return response()->json($category);
+        return response()->json([
+            'message' => 'Categoria actualizada',
+            'category' => $category
+        ]);
     }
 
     /**

@@ -40,6 +40,7 @@ class CourseController extends Controller
             'category_id' => $request->category_id,
             'created_by' => $request->creator_id,
         ]);
+        return response()->json(['message' => 'Curso creado', 'course' => $course], 201);
     }
 
     /**
@@ -72,7 +73,10 @@ class CourseController extends Controller
         ]);
 
         $course->update($request->all());
-        return response()->json($course);
+        return response()->json([
+            'message' => 'Curso actualizado',
+            'course' => $course
+        ]);
     }
 
     /**

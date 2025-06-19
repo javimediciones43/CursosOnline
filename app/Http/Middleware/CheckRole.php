@@ -16,9 +16,12 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        // Esto verifica si el rol del usuario es el mismo que el rol que se pasa como argumento. Si el usuario no tiene ese rol, se devuelve un mensaje de error y cancela la solicitud.
+        // Esto verifica si el rol del usuario es el mismo que el rol que se pasa como argumento.
+        // Si el usuario no tiene ese rol, se devuelve un mensaje de error y cancela la solicitud.
         if ($request->user()->role !== $role) {
-            return response()->json(['message' => 'Acceso denegado. Solo usuarios con rol ' . $role . ' tienen acceso.'], 403);
+            return response()->json([
+                'message' => 'Acceso denegado. Solo usuarios con rol ' . $role . ' tienen acceso.'],
+                403);
         }
         return $next($request);
     }
